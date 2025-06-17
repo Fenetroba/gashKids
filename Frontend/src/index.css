@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+
+
+
+:root{
+  --one1m:#1d284e;
+  --one2m:#293f7f;
+  --one3m:#70a8ea;
+  --one4m:#c5dcf8;
+  --one5m:#dfebfa;
+  --one6m:#f1f6fd;
+  --two1m:#132b08;
+  --two2m:#2b4f18;
+  --two3m:#62c022;
+  --two4m:#a2e96d;
+  --two5m:#e2f9ce;
+  --two6m:#f2fce9;
+  --three1m:#391c11;
+  --three2m:#6b3a23;
+  --three3m:#d5853a;
+  --three4m:#f1dab7;
+  --three5m:#f8eedc;
+  --three6m:#fcf8f0;
+  --one1f:#421457;
+  --one2f:#612b78;
+  --one3f:#8d3ab6;
+  --one4f:#e0bef4;
+  --one5f:#f5ebfc;
+  --one6f:#fbf6fe;
+  --two1f:#0e2513;
+  --two2f:#224428;
+  --two3f:#368341;
+  --two4f:#9ed7a6;
+  --two5f:#e3f5e5;
+  --two6f:#f3faf3;
+  --three1f:#3e1926;
+  --three2f:#693245;
+  --three3f:#af5376;
+  --three4f:#c47094;
+  --three5f:#f0dae6;
+  --three6f:#faf5f8;
+  --parent1:#401c08;
+  --parent1:#c3790b;
+  --parent1:#fae58e;
+  --parent1:#fdfae9;
+
+}
