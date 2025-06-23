@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <section>
-      <div className="z-40 bg-[var(--parent4)] flex  justify-between px-10 items-center">
+      <div className=" z-40 bg-[var(--parent4)] flex  justify-between px-10 items-center">
         <div className="relative">
           <img src={Logo} alt="Logo" className="w-38 h-20 " />
         </div>
@@ -58,7 +58,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-1">
           <Button className="cursor-pointer bg-[var(--parent1)] w-30 text-[var(--parent4)] rounded-2xl text-[16px] hover:bg-[var(--parent2)] ">
-          {/* <Link to="/login" >Login</Link>  */}
+          <Link to="/auth/login" >Login</Link> 
           </Button>
         </div>
       </div>
