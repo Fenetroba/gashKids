@@ -15,6 +15,7 @@ export const register = createAsyncThunk(
       const response = await api.post('/users/register', userData);
       return response.data;
     } catch (err) {
+      console.log(err)
       return rejectWithValue(err.response?.data || { message: 'Registration failed' });
     }
   }

@@ -1,36 +1,29 @@
-import React, { useState } from 'react'
-import Header from '@/components/gust/Header'
-import Footer from '@/components/gust/Footer'
-import { Link } from 'react-router-dom'
-import axios from '../lib/Axios'
+import React, { useState } from "react";
+import Header from "@/components/gust/Header";
+import Footer from "@/components/gust/Footer";
+import { Link } from "react-router-dom";
+import axios from "../lib/Axios";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "@/store/AuthSlice";
+import Load from "@/components/ui/Load";
+
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const { loading } = useSelector((state) => state.auth);
+
+  const [message, setMessage] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    try {
-      const res = await axios('/users/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage('Registration successful!');
-      } else {
-        setMessage(data.message || 'Registration failed');
-      }
-    } catch (err) {
-      setMessage('An error occurred');
-    }
-    setLoading(false);
+    
+
+    dispatch(register(user)).then((result) => {
+      console.log(result.payload.message);
+    });
+
   };
 
   return (
@@ -45,45 +38,48 @@ const Register = () => {
           <input
             type="text"
             placeholder="Name"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
           />
           <input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
           />
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
           />
           <button
             type="submit"
-            className="w-full text-[var(--parent1)] font-bold cursor-pointer rounded-2xl py-2 roundedtransition bg-[var(--parent3)]"
+            className="w-full flex items-center justify-center text-[var(--parent1)] font-bold cursor-pointer rounded-2xl py-2 roundedtransition bg-[var(--parent3)]"
             disabled={loading}
           >
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? <Load/> : "Register"}
           </button>
           {message && (
             <p className="mt-4 text-center text-red-500">{message}</p>
           )}
           <p className="mt-10 text-center">
-            Already have an account? <Link to="/auth/login" className="text-blue-400">Login</Link>
+            Already have an account?{" "}
+            <Link to="/auth/login" className="text-blue-400">
+              Login
+            </Link>
           </p>
         </form>
       </div>
       <Footer />
     </section>
   );
-}
+};
 
-export default Register
+export default Register;
