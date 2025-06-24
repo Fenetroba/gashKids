@@ -33,8 +33,24 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Incorrect email or password' });
     }
-    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+    // Set cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // true in production
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+    // Respond with user info (omit password)
+    res.status(200).json({
+      message: 'Login successful',
+      user: { id: user._id, name: user.name, email: user.email, role: user.role }
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -48,13 +64,19 @@ export const logout = (req, res) => {
 
 // Check authentication
 export const checkAuth = (req, res) => {
+  // Try to get token from Authorization header or cookie
+  let token;
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  } else if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  } else {
     return res.status(401).json({ message: 'No token provided' });
   }
-  const token = authHeader.split(' ')[1];
+
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     res.json({ user: decoded });
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });

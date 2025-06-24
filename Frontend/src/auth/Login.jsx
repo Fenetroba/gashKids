@@ -4,34 +4,26 @@ import React, { useState } from "react";
 import "../app.css";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+import Load from "@/components/ui/Load";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginUser } from "@/store/AuthSlice";
+import { toast } from "sonner"
 
+const Login = () => {
+  const [user, setUser] = useState({ email: "", password: "" });
+  const { loading } = useSelector((state) => state.auth);
+
+const dispatch=useDispatch()
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage("Login successful!");
-        // Save token to localStorage or context
-        localStorage.setItem("token", data.token);
-      } else {
-        setMessage(data.message || "Login failed");
-      }
-    } catch (err) {
-      setMessage("An error occurred");
-    }
-    setLoading(false);
+    dispatch(LoginUser(user)).then((result) => {
+      toast(result.payload.message, {
+        style: { background: '#333', color: '#fff' }
+      })
+      
+    });
+    console.log(user)
+
   };
 
   return (
@@ -46,8 +38,8 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={e => setUser({ ...user, email: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
           />
@@ -55,21 +47,19 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={e => setUser({ ...user, password: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
           />
           <button
             type="submit"
-            className="w-full  text-[var(--parent1)] font-bold cursor-pointer rounded-2xl py-2 roundedtransition bg-[var(--parent3)]"
+            className="w-full flex items-center justify-center  text-[var(--parent1)] font-bold cursor-pointer rounded-2xl py-2 roundedtransition bg-[var(--parent3)]"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? <Load/>: "Login"}
           </button>
-          {message && (
-            <p className="mt-4 text-center text-red-500">{message}</p>
-          )}
+     
 
           <p className="mt-10 text-center">
             have't An account ? <Link to="/auth/signup" className="text-blue-400">Sign Up</Link><br />

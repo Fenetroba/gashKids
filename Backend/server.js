@@ -5,8 +5,10 @@ env.config()
 import connectDB from './lib/DB.js'
 import userRouter from './routers/user.router.js'
 const PORT = process.env.PORT || 5000
+import cookieParser from 'cookie-parser';
 
 const app = express()
+app.use(cookieParser());
 app.use(express.json())
 app.use(cors({
   origin:true,

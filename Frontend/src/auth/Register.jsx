@@ -6,7 +6,7 @@ import axios from "../lib/Axios";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "@/store/AuthSlice";
 import Load from "@/components/ui/Load";
-
+import { toast } from "sonner"
 
 const Register = () => {
   const [user, setUser] = useState({ name: "", email: "", password: "" });
@@ -21,7 +21,9 @@ const Register = () => {
     
 
     dispatch(register(user)).then((result) => {
-      console.log(result.payload.message);
+      toast(result.payload.message, {
+        style: { background: '#333', color: '#fff' }
+      })
     });
 
   };

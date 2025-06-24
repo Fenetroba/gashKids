@@ -9,11 +9,11 @@
    /* From Uiverse.io by chase2k25 */ 
 /* From Uiverse.io by bociKond */ 
 .loader {
-  width: 24.8px;
-  height: 24.8px;
+  width: 20.8px;
+  height: 20.8px;
   color: #062502;
   position: relative;
-  background: radial-gradient(11.2px,currentColor 94%,#0000);
+  background: radial-gradient(6.2px,currentColor 94%,#0000);
 }
 
 .loader:before {
@@ -25,7 +25,7 @@
           radial-gradient(10.08px at bottom left ,#0000 94%,currentColor) top    right,
           radial-gradient(10.08px at top    right,#0000 94%,currentColor) bottom left,
           radial-gradient(10.08px at top    left ,#0000 94%,currentColor) bottom right;
-  background-size: 22.4px 22.4px;
+  background-size: 11.4px 22.4px;
   background-repeat: no-repeat;
   animation: loader 1.5s infinite cubic-bezier(0.3,1,0,1);
 }
