@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 const ParentLayer = () => {
   return (
-    <div>\jfu
+    <div>
      <Outlet/>
 
     </div>

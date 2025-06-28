@@ -11,6 +11,8 @@ import { Children, useEffect } from "react";
 import { checkAuth } from "./store/AuthSlice";
 import PageProtector from "./components/check_page/PageProtector";
 import ParentLayer from "./layer/Parents/ParentLayer";
+import ChildControllers from "./pages/Parents/ChildControllers";
+import ContactUs from "./components/gust/contactUs";
 
 function App() {
   const { isAuthenticated, loading, user } = useSelector((state) => state.auth);
@@ -30,10 +32,11 @@ function App() {
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="contactus" element={<ContactUs />} />
         <Route
           path="/auth"
           element={
-            <PageProtector isAuthenticated={isAuthenticated} user={user}>
+            <PageProtector isAuthenticated={isAuthenticated} user={user}  >
               <AuthLayer />
             </PageProtector>
           }
@@ -53,6 +56,8 @@ function App() {
           }
         >
           <Route path="home" element={<ParentHome />} />
+          <Route path="controllers" element={<ChildControllers />} />
+        
         </Route>
       </Routes>
     </div>
